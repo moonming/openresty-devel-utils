@@ -37,8 +37,10 @@ while true do
     if line == nil then
         break
     end
-    ua_count = ua_count + 1
-    table.insert(ua, line)
+    if line ~= '' then
+        ua_count = ua_count + 1
+        table.insert(ua, line)
+    end
 end
 
 local function gen_uri_comp()
