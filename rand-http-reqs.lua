@@ -1,7 +1,7 @@
 math.randomseed(os.time())
 
 local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
-local charset_length = string.length(charset)
+local charset_length = string.len(charset)
 local random_charset = {}
 
 function setup(thread)
@@ -50,7 +50,7 @@ end
 local function gen_url()
     local url = gen_path() .. "?" .. gen_args()
     local max_size = 10240
-    if string.length(url) > max_size then
+    if string.len(url) > max_size then
         url = string.sub(url, 1, max_size - 1)
     end
     return url
