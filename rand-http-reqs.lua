@@ -27,6 +27,19 @@ for i = 1, value_charset_length do
     value_random_charset[i] = string.sub(value_charset, i, i)
 end
 
+-- load ua
+local ua = {}
+local pwd = os.getenv("PWD") .. "/"
+local ua_file = io.open(pwd .. "ua.txt")
+local ua_count = 0
+while true do
+    local line = ua_file:read()
+    if line == nil then
+        break
+    end
+    ua_count = ua_count + 1
+    table.insert(ua, line)
+end
 
 local function gen_uri_comp()
     local value = {}
@@ -84,7 +97,7 @@ local function gen_url()
 end
 
 local function gen_ua()
-    return "Mozilla/5.0 (compatible; ABrowse 0.4; Syllable)"
+    return ua[math.random(ua_count)]
 end
 
 local function gen_header()
@@ -107,9 +120,10 @@ local function gen_header()
         headers[i] = table.concat(key, '') .. ":" .. table.concat(value, '')
     end
 
-    headers['Connection'] = 'Keep-Alive'
     headers['User-Agent'] = gen_ua()
-    return table.concat(headers, "\r\n")
+    headers['Connection'] = 'Keep-Alive'
+
+    return headers
 end
 
 function request()
