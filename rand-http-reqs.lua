@@ -1,5 +1,8 @@
 math.randomseed(os.time())
 
+local math_random = math.random
+local table_concat = table.concat
+
 -- uri_charset
 local uri_charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
 local uri_charset_length = string.len(uri_charset)
@@ -45,27 +48,27 @@ end
 
 local function gen_uri_comp()
     local value = {}
-    local len = math.random(20) -- between 1 and 20
+    local len = math_random(20) -- between 1 and 20
 
     for i = 1, len do
-        if math.random(3) == 1 then
-            local c = math.random(255)
+        if math_random(3) == 1 then
+            local c = math_random(255)
             c = string.format("%.02x", c)
-            if math.random(2) == 1 then -- 50% upper
+            if math_random(2) == 1 then -- 50% upper
                 value[i] = '%' .. string.upper(c)
             else
                 value[i] = '%' .. string.lower(c)
             end
         else
-            value[i] = uri_random_charset[math.random(uri_charset_length)]
+            value[i] = uri_random_charset[math_random(uri_charset_length)]
         end
     end
 
-    return table.concat(value, "")
+    return table_concat(value, "")
 end
 
 local function gen_args()
-    local n = math.random(30)
+    local n = math_random(30)
     local args = {}
 
     for i = 1, n do
@@ -74,18 +77,18 @@ local function gen_args()
         args[i] = key .. "=" .. value
     end
 
-    return table.concat(args, "&")
+    return table_concat(args, "&")
 end
 
 local function gen_path()
-    local n = math.random(20)
+    local n = math_random(20)
     local comp = {}
 
     for i = 1, n do
         comp[i] = gen_uri_comp()
     end
 
-    local url = table.concat(comp, "/")
+    local url = table_concat(comp, "/")
     return "/" .. url
 end
 
@@ -99,27 +102,27 @@ local function gen_url()
 end
 
 local function gen_ua()
-    return ua[math.random(ua_count)]
+    return ua[math_random(ua_count)]
 end
 
 local function gen_header()
     local headers = {}
-    local n = math.random(50)
+    local n = math_random(50)
 
     for i = 1, n do
-        local len = math.random(20)
+        local len = math_random(20)
         local key = {}
         for j = 1, len do
-            key[j] = key_random_charset[math.random(key_charset_length)]
+            key[j] = key_random_charset[math_random(key_charset_length)]
         end
 
-        len = math.random(50)
+        len = math_random(50)
         local value = {}
         for k = 1, len do
-            value[k] = value_random_charset[math.random(value_charset_length)]
+            value[k] = value_random_charset[math_random(value_charset_length)]
         end
 
-        headers[table.concat(key, '')] = table.concat(value, '')
+        headers[table_concat(key, '')] = table_concat(value, '')
     end
 
     headers['User-Agent'] = gen_ua()
@@ -134,7 +137,7 @@ function request()
     local headers = gen_header()
     local body = nil
 
-    local n = math.random(5)
+    local n = math_random(5)
     if n == 1 then -- 20% are POST requests
         method = "POST"
         body = gen_args()
