@@ -1,11 +1,30 @@
 math.randomseed(os.time())
 
-local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
-local charset_length = string.len(charset)
-local random_charset = {}
+-- uri_charset
+local uri_charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
+local uri_charset_length = string.len(uri_charset)
+local uri_random_charset = {}
 
-for i = 1, charset_length do
-    random_charset[i] = string.sub(charset, i, i)
+for i = 1, uri_charset_length do
+    uri_random_charset[i] = string.sub(uri_charset, i, i)
+end
+
+-- header_key_charset
+local key_charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+local key_charset_length = string.len(key_charset)
+local key_random_charset = {}
+
+for i = 1, key_charset_length do
+    key_random_charset[i] = string.sub(key_charset, i, i)
+end
+
+-- header_value_charset
+local value_charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ !~^@#/.;:+=*?<>"
+local value_charset_length = string.len(value_charset)
+local value_random_charset = {}
+
+for i = 1, value_charset_length do
+    value_random_charset[i] = string.sub(value_charset, i, i)
 end
 
 local function gen_uri_comp()
@@ -22,7 +41,7 @@ local function gen_uri_comp()
                 value[i] = '%' .. string.lower(c)
             end
         else
-            value[i] = random_charset[math.random(charset_length)]
+            value[i] = uri_random_charset[math.random(uri_charset_length)]
         end
     end
 
@@ -69,9 +88,14 @@ end
 
 local function gen_header()
     local headers = {}
+    local n = math.random(50)
+    for i = 1, n do
+        local len = math.random(20)
+        
+    end
     headers['Connection'] = 'Keep-Alive'
     headers['User-Agent'] = gen_ua()
-    return headers
+    return table.concat(headers, "\r\n")
 end
 
 function request()
