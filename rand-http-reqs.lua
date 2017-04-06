@@ -10,10 +10,6 @@ function setup(thread)
     end
 end
 
-local function gen_random_string()
-    return random_charset[math.random(charset_length)]
-end
-
 local function gen_args()
     return "a=1&b=2"
 end
@@ -32,7 +28,7 @@ local function gen_uri_comp()
                 value[i] = '%' .. string.lower(c)
             end
         else
-            value[i] = gen_random_string()
+            value[i] = random_charset[math.random(charset_length)]
         end
     end
 
