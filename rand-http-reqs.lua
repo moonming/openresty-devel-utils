@@ -4,10 +4,8 @@ local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.
 local charset_length = string.len(charset)
 local random_charset = {}
 
-function setup(thread)
-    for i = 1, charset_length do
-        random_charset[i] = string.sub(charset, i, i)
-    end
+for i = 1, charset_length do
+    random_charset[i] = string.sub(charset, i, i)
 end
 
 local function gen_args()
