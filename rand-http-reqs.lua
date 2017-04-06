@@ -27,6 +27,7 @@ for i = 1, value_charset_length do
     value_random_charset[i] = string.sub(value_charset, i, i)
 end
 
+
 local function gen_uri_comp()
     local value = {}
     local len = math.random(20) -- between 1 and 20
@@ -89,10 +90,23 @@ end
 local function gen_header()
     local headers = {}
     local n = math.random(50)
+
     for i = 1, n do
         local len = math.random(20)
-        
+        local key = {}
+        for j = 1, len do
+            key[j] = key_random_charset[math.random(key_charset_length)]
+        end
+
+        len = math.random(50)
+        local value = {}
+        for k = 1, len do
+            value[k] = value_random_charset[math.random(value_charset_length)]
+        end
+
+        headers[i] = table.concat(key, '') .. ":" .. table.concat(value, '')
     end
+
     headers['Connection'] = 'Keep-Alive'
     headers['User-Agent'] = gen_ua()
     return table.concat(headers, "\r\n")
