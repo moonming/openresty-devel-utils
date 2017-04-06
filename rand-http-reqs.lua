@@ -117,7 +117,7 @@ local function gen_header()
             value[k] = value_random_charset[math.random(value_charset_length)]
         end
 
-        headers[i] = table.concat(key, '') .. ":" .. table.concat(value, '')
+        headers[table.concat(key, '')] = table.concat(value, '')
     end
 
     headers['User-Agent'] = gen_ua()
