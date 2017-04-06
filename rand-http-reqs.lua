@@ -1,18 +1,17 @@
 math.randomseed(os.time())
 
+local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
+local charset_length = string.length(charset)
 local random_charset = {}
 
 function setup(thread)
-    local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
-    local length = string.length(charset)
-    for i = 1, length do
+    for i = 1, charset_length do
         random_charset[i] = string.sub(charset, i, i)
     end
 end
 
-local gen_random_string()
-    
-
+local function gen_random_string()
+    return random_charset[math.random(charset_length)]
 end
 
 local function gen_args()
@@ -72,7 +71,7 @@ local function gen_header()
     return headers
 end
 
-request = function()
+function request()
     local method = "GET"
     local url = gen_url()
     local headers = gen_header()
