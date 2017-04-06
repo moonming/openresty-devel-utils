@@ -1,7 +1,18 @@
 math.randomseed(os.time())
 
+local function gen_uri_comp()
+end
+
 local function gen_path()
-    return ''
+    local n = math.random(20)
+    local comp = {}
+
+    for i = 1, n do
+        comp[i] = gen_uri_comp()
+    end
+
+    local url = table.concat(comp, "/")
+    return "/" .. url
 end
 
 local function gen_url()
@@ -35,7 +46,7 @@ request = function()
     local body = nil
 
     local n = math.random(5)
-    if n == 1 then
+    if n == 1 then -- 20% are POST requests
         method = "POST"
         body = gen_args()
         local len = string.len(body)
