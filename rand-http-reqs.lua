@@ -1,6 +1,17 @@
 math.randomseed(os.time())
 
+local random_charset = {}
+
+function setup(thread)
+    local charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._~:/@!,;=+*-"
+    local length = string.length(charset)
+    for i = 1, length do
+        random_charset[i] = string.sub(charset, i, i)
+    end
+end
+
 local gen_random_string()
+    
 
 end
 
