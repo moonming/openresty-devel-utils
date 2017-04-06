@@ -8,10 +8,6 @@ for i = 1, charset_length do
     random_charset[i] = string.sub(charset, i, i)
 end
 
-local function gen_args()
-    return "a=1&b=2"
-end
-
 local function gen_uri_comp()
     local value = {}
     local len = math.random(20) -- between 1 and 20
@@ -31,6 +27,19 @@ local function gen_uri_comp()
     end
 
     return table.concat(value, "")
+end
+
+local function gen_args()
+    local n = math.random(30)
+    local args = {}
+
+    for i = 1, n do
+        local key = gen_uri_comp()
+        local value = gen_uri_comp()
+        args[i] = key .. "=" .. value
+    end
+
+    return table.concat(args, "&")
 end
 
 local function gen_path()
