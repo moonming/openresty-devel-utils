@@ -1,7 +1,16 @@
 math.randomseed(os.time())
 
+local function gen_path()
+    return ''
+end
+
 local function gen_url()
-    return '/hello'
+    local url = gen_path() .. "?" .. gen_args()
+    local max_size = 10240
+    if string.length(url) > max_size) then
+        url = string.sub(url, 1, max_size - 1)
+    end
+    return url
 end
 
 local function gen_ua()
